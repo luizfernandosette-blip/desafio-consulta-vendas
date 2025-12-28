@@ -2,7 +2,6 @@ package com.devsuperior.dsmeta.repositories;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,19 +20,11 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
 	List<SummaryProjection> getSummary(LocalDate dataInicial, LocalDate dataFinal);
 	
 	
-	@Query(nativeQuery = true, value = "SELECT seller.id, sale.date, sale.amount, seller.name AS sellerName FROM TB_SALES sale "
-			+ "INNER JOIN TB_SELLER seller "
-			+ "ON sale.seller_id = seller.id "
-			+ "where sale.date between :dataInicial and :dataFinal and seller.name like CONCAT('%', :name, '%') "
-			+ "group by sale.date, sale.amount, seller.id")
+	@Query(nativeQuery = true, value = 
+	"SELECT sel.id, s.date, s.amount, sel.name AS sellerName FROM TB_SALES s "
+	+ "INNER JOIN TB_SELLER sel ON s.seller_id = sel.id WHERE s.date "
+	+ "BETWEEN :dataInicial AND :dataFinal AND sel.name ILIKE (CONCAT('%',:name,'%'))")		
 	Page<ReportProjection> getReport(LocalDate dataInicial, LocalDate dataFinal, String name, Pageable pageable);
 	
-	
-	
-	@Query(nativeQuery = true, value = "SELECT seller.id, sale.date, sale.amount, seller.name AS sellerName FROM TB_SALES sale "
-			+ "INNER JOIN TB_SELLER seller "
-			+ "ON sale.seller_id = seller.id "
-			+ "where sale.date between '2024-12-27' and '2025-12-27' "
-			+ "group by sale.date, sale.amount, seller.id")
-	Page<ReportProjection> getReport(LocalDate dataInicial, LocalDate dataFinal, Pageable pageable);
+		
 }

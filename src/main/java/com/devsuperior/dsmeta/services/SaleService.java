@@ -39,8 +39,10 @@ public class SaleService {
 	public Page<ReportDTO> getReport(LocalDate dataInicial, LocalDate dataFinal, String name, Pageable pageable){
 		
 		Page<ReportProjection> report = repository.getReport(dataInicial, dataFinal, name, pageable);
+		
 		return report.map(x -> new ReportDTO(x));
 	}
 	
 	
+		
 }

@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.devsuperior.dsmeta.dto.ReportDTO;
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
 import com.devsuperior.dsmeta.dto.SummaryDTO;
@@ -59,13 +57,12 @@ public class SaleController {
 		
 			
 	}
-	
-	
+		
 	@GetMapping(value = "/report")
 	public ResponseEntity<Page<ReportDTO>> getReport(@RequestParam(value="minDate" , required = false) String minDate,
 			@RequestParam(value="maxDate" , required = false) String maxDate,
-			@RequestParam(value="name" , required = false) String name, Pageable pageable) {
-		
+			@RequestParam(value="name" , required = false) String name, Pageable pageable){
+			
 		if (minDate != null && maxDate != null) {
 			try {
 				LocalDate dataInicial = LocalDate.parse(minDate);
