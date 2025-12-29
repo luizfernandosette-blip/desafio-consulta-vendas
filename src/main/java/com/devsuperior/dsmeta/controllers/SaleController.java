@@ -60,8 +60,8 @@ public class SaleController {
 		
 	@GetMapping(value = "/report")
 	public ResponseEntity<Page<ReportDTO>> getReport(@RequestParam(value="minDate" , required = false) String minDate,
-			@RequestParam(value="maxDate" , required = false) String maxDate,
-			@RequestParam(value="name" , required = false) String name, Pageable pageable){
+			@RequestParam(name="maxDate" , required = false) String maxDate,
+			@RequestParam(name="name" , required = false, defaultValue = "") String name, Pageable pageable){
 			
 		if (minDate != null && maxDate != null) {
 			try {
@@ -77,7 +77,7 @@ public class SaleController {
 		}else {
 			LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 			LocalDate minusOneYear = today.minusYears(1L);
-			Page<ReportDTO> reportDTO = service.getReport(minusOneYear, today, "", pageable);
+			Page<ReportDTO> reportDTO = service.getReport(minusOneYear, today, name, pageable);
 			return ResponseEntity.ok(reportDTO);
 		}
 		

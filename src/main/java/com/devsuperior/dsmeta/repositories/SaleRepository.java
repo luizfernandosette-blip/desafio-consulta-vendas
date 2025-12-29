@@ -21,9 +21,11 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
 	
 	
 	@Query(nativeQuery = true, value = 
-	"SELECT sel.id, s.date, s.amount, sel.name AS sellerName FROM TB_SALES s "
+	"SELECT s.id, s.date, s.amount, sel.name AS sellerName FROM TB_SALES s "
 	+ "INNER JOIN TB_SELLER sel ON s.seller_id = sel.id WHERE s.date "
-	+ "BETWEEN :dataInicial AND :dataFinal AND sel.name ILIKE (CONCAT('%',:name,'%'))")		
+	+ "BETWEEN :dataInicial AND :dataFinal AND sel.name ILIKE (CONCAT('%',:name,'%'))",
+	countQuery = "SELECT count(s.id) FROM TB_SALES s inner join tb_Seller sel on s.seller_id = sel.id WHERE s.date "
+			+ "BETWEEN :dataInicial AND :dataFinal AND sel.name ILIKE (CONCAT('%',:name,'%'))")
 	Page<ReportProjection> getReport(LocalDate dataInicial, LocalDate dataFinal, String name, Pageable pageable);
 	
 		
